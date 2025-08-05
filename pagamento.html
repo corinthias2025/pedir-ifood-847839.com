@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Pagamento via PIX - iFood Moderno</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  <style>
+    /* RESET refinado */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff9fa 0%, #ffecee 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2.5rem 1rem;
+      color: #3a3a3a;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Header elegante */
+    header {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: center;
+      animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    header img {
+      height: 75px;
+      width: auto;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      filter: drop-shadow(0 2px 6px rgba(232, 34, 46, 0.2));
+    }
+
+    header img:hover {
+      transform: translateY(-3px);
+      filter: drop-shadow(0 4px 12px rgba(232, 34, 46, 0.3));
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Container principal */
+    .container {
+      background: white;
+      padding: 3rem;
+      border-radius: 18px;
+      box-shadow: 
+        0 6px 30px rgba(232, 34, 46, 0.12),
+        0 12px 40px rgba(232, 34, 46, 0.08);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(232, 34, 46, 0.15);
+      animation: fadeInUp 0.6s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #e8222e, #ff4757);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Tipografia refinada */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #e8222e;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: #e8222e;
+      border-radius: 3px;
+    }
+
+    .descricao {
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* Card de conteúdo */
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Textarea premium */
+    textarea {
+      width: 100%;
+      height: 140px;
+      resize: none;
+      padding: 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      border: 1px solid #e0e0e0;
+      font-weight: 600;
+      color: #c62828;
+      background: #fff;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 
+        inset 0 1px 4px rgba(0,0,0,0.05),
+        0 2px 8px rgba(232, 34, 46, 0.1);
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #e8222e;
+      box-shadow: 
+        inset 0 1px 4px rgba(0,0,0,0.05),
+        0 0 0 3px rgba(232, 34, 46, 0.15);
+    }
+
+    /* Botão premium */
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1.1rem 2rem;
+      background: linear-gradient(135deg, #e8222e, #ff4757);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 
+        0 4px 15px rgba(232, 34, 46, 0.3),
+        0 2px 4px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 20px rgba(232, 34, 46, 0.4),
+        0 3px 6px rgba(0,0,0,0.08);
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button svg {
+      width: 22px;
+      height: 22px;
+      fill: white;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover svg {
+      transform: scale(1.15);
+    }
+
+    /* Mensagem de feedback */
+    .mensagem {
+      color: #2e7d32;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      min-height: 1.4em;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .mensagem.show {
+      opacity: 1;
+    }
+
+    /* Modal premium */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 
+        0 10px 30px rgba(0,0,0,0.15),
+        0 4px 10px rgba(0,0,0,0.08);
+      animation: modalIn 0.4s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+      position: relative;
+      border-top: 4px solid #e8222e;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal ol {
+      padding-left: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal ol li {
+      margin-bottom: 1rem;
+      color: #444;
+      font-weight: 500;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .modal ol li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 8px;
+      height: 8px;
+      background: #e8222e;
+      border-radius: 50%;
+    }
+
+    .modal button {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* Responsividade */
+    @media (max-width: 480px) {
+      body {
+        padding: 1.8rem 1rem;
+      }
+      
+      header img {
+        height: 65px;
+      }
+      
+      .container {
+        padding: 2.2rem 1.8rem;
+        border-radius: 14px;
+      }
+      
+      h1 {
+        font-size: 1.9rem;
+      }
+      
+      .descricao {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+      
+      textarea {
+        height: 120px;
+        padding: 1.2rem;
+      }
+      
+      button {
+        padding: 1rem 1.8rem;
+      }
+      
+      .modal {
+        padding: 2rem 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="Logo iFood" />
+  </header>
+
+  <main class="container" role="main" aria-labelledby="titulo-pagina">
+    <h1 id="titulo-pagina">Pagamento via PIX</h1>
+    <p class="descricao">Use o código abaixo para pagar com PIX. Clique para copiar:</p>
+
+    <div class="card">
+      <textarea id="codigoPix" aria-label="Código PIX para pagamento" readonly></textarea>
+      <button id="copiarBtn" aria-describedby="msgCopiado" aria-live="polite">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zM19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg>
+        Copiar Código PIX
+      </button>
+      <p id="msgCopiado" class="mensagem" role="alert" aria-live="assertive"></p>
+    </div>
+  </main>
+
+  <!-- Modal popup -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
+    <div class="modal" tabindex="0">
+      <ol id="modalDesc">
+        <li>Abra o aplicativo do seu banco ou carteira digital.</li>
+        <li>Acesse a opção de pagamento via PIX.</li>
+        <li>Escolha a opção "PIX Copia e Cola".</li>
+        <li>Cole o código PIX copiado no campo indicado.</li>
+        <li>Confira os dados e confirme o pagamento.</li>
+        <li>Guarde o comprovante para eventuais confirmações.</li>
+      </ol>
+      <button id="closeModalBtn" aria-label="Fechar instruções">OK</button>
+    </div>
+  </div>
+
+  <script>
+    // Carrega o código PIX do arquivo JSON externo
+    fetch("pix.json")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("codigoPix").value = data.codigo_pix;
+      })
+      .catch(() => {
+        document.getElementById("codigoPix").value = "Erro ao carregar código PIX.";
+      });
+
+    const copiarBtn = document.getElementById("copiarBtn");
+    const textarea = document.getElementById("codigoPix");
+    const mensagem = document.getElementById("msgCopiado");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modal = modalOverlay.querySelector('.modal');
+
+    // Função para mostrar mensagem com fade
+    function showMensagem(text) {
+      mensagem.textContent = text;
+      mensagem.classList.add('show');
+      setTimeout(() => mensagem.classList.remove('show'), 3000);
+    }
+
+    // Função para abrir modal e focar dentro
+    function openModal() {
+      modalOverlay.classList.add('show');
+      modalOverlay.focus();
+      closeModalBtn.focus();
+    }
+
+    // Função para fechar modal
+    function closeModal() {
+      modalOverlay.classList.remove('show');
+      copiarBtn.focus();
+    }
+
+    copiarBtn.addEventListener("click", () => {
+      textarea.select();
+      textarea.setSelectionRange(0, 99999); // para mobile
+
+      if(document.execCommand("copy")) {
+        showMensagem("Código PIX copiado com sucesso!");
+        openModal();
+      } else {
+        showMensagem("Erro ao copiar código.");
+      }
+    });
+
+    closeModalBtn.addEventListener("click", closeModal);
+
+    modalOverlay.addEventListener("click", (e) => {
+      if(e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modalOverlay.classList.contains("show")) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

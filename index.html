@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Açaí Delivery - Promoção 2 por 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --primary-dark: #d62839;
+            --secondary-color: #f1faee;
+            --dark-color: #1d3557;
+            --light-color: #f8f9fa;
+            --gray-color: #495057;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --black: #000000;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--gray-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .promo-banner {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 10px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .promo-banner span {
+            font-weight: 700;
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin: 0 5px;
+        }
+
+        main {
+            padding: 30px 0 100px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--gray-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .flavors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .flavor-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .flavor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .flavor-card.selected {
+            border: 3px solid var(--primary-color);
+        }
+
+        .flavor-card.disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .flavor-card-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .flavor-card-img img {
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .flavor-card:hover .flavor-card-img img {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .flavor-card-content {
+            padding: 20px;
+        }
+
+        .flavor-card-content h3 {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .flavor-card-content p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 25px;
+            height: 25px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .flavor-card.selected .checkmark {
+            opacity: 1;
+        }
+
+        .floating-order {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            transform: translateY(100%);
+            transition: var(--transition);
+            z-index: 90;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .floating-order.visible {
+            transform: translateY(0);
+        }
+
+        .order-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .order-items {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-item {
+            background-color: var(--light-gray);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .order-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .order-time {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .order-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .order-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .order-btn:disabled {
+            background-color: var(--light-gray);
+            color: var(--gray-color);
+            cursor: not-allowed;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(230, 57, 70, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+            }
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .floating-order {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .order-summary {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .order-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .flavors-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+
+            .promo-banner {
+                font-size: 0.9rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .flavor-card-img {
+                height: 200px;
+            }
+
+            .order-items {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="promo-banner">
+        <div class="container">
+            <p>PROMOÇÃO IMPERDÍVEL! <br><span>2 SABORES POR APENAS R$20,00</span><br> Aproveite essa oferta especial!</p>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Sabores de Açaí</h2>
+                <p>Escolha exatamente 2 sabores incríveis para montar seu açaí perfeito por um preço especial!</p>
+            </div>
+
+            <div class="flavors-grid">
+                <div class="flavor-card" tabindex="0" aria-label="Açaí tradicional" data-flavor="Açaí Tradicional">
+                    <div class="flavor-card-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREf4b471woBwbvemBk2xLtBEQyGT1HGsrV3w&s" alt="Açaí Tradicional">
+                    </div>
+                    <div class="flavor-card-content">
+                        <h3>Açaí Tradicional</h3>
+                        <p>O autêntico sabor da Amazônia, cremoso e delicioso.</p>
+                    </div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <div class="flavor-card" tabindex="0" aria-label="Açaí com banana" data-flavor="Açaí com Banana">
+                    <div class="flavor-card-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtkbUFVyvpUwsDvxTtyT7y9sjgVB_OaPM4Ug&s" alt="Açaí com Banana">
+                    </div>
+                    <div class="flavor-card-content">
+                        <h3>Açaí com Banana</h3>
+                        <p>Açaí cremoso combinado com a doçura natural da banana.</p>
+                    </div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <div class="flavor-card" tabindex="0" aria-label="Açaí com morango" data-flavor="Açaí com Morango">
+                    <div class="flavor-card-img">
+                        <img src="https://i.pinimg.com/736x/85/7f/9a/857f9a5ece01583d358e4edacb1e50d5.jpg" alt="Açaí com Morango">
+                    </div>
+                    <div class="flavor-card-content">
+                        <h3>Açaí com Morango</h3>
+                        <p>A combinação perfeita de açaí cremoso com morangos frescos.</p>
+                    </div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <div class="flavor-card" tabindex="0" aria-label="Açaí com nutella" data-flavor="Açaí com Nutella">
+                    <div class="flavor-card-img">
+                        <img src="https://s3-sa-east-1.amazonaws.com/deliveryon-uploads/products/summer/41_5f4ade754e274.jpeg" alt="Açaí com Nutella">
+                    </div>
+                    <div class="flavor-card-content">
+                        <h3>Açaí com Nutella</h3>
+                        <p>Açaí premium com generosas porções de Nutella.</p>
+                    </div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <div class="flavor-card" tabindex="0" aria-label="Açaí com paçoca" data-flavor="Açaí com Paçoca">
+                    <div class="flavor-card-img">
+                        <img src="https://instadelivery-public.nyc3.cdn.digitaloceanspaces.com/itens/1700680709655e540579773_75_75.jpeg" alt="Açaí com Paçoca">
+                    </div>
+                    <div class="flavor-card-content">
+                        <h3>Açaí com Paçoca</h3>
+                        <p>Açaí tradicional com paçoca triturada, uma combinação irresistível.</p>
+                    </div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+
+                <div class="flavor-card" tabindex="0" aria-label="Açaí com granola" data-flavor="Açaí com Granola">
+                    <div class="flavor-card-img">
+                        <img src="https://img.cdndsgni.com/preview/10187007.jpg" alt="Açaí com Granola">
+                    </div>
+                    <div class="flavor-card-content">
+                        <h3>Açaí com Granola</h3>
+                        <p>Açaí cremoso com crocante granola, perfeito para um lanche saudável.</p>
+                    </div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="floating-order">
+        <div class="order-summary">
+            <div class="order-items">
+                <div class="order-item">Selecione 2 sabores</div>
+            </div>
+            <div class="order-price">R$20,00</div>
+        </div>
+        <div class="order-time">
+            <i class="fas fa-clock"></i>
+            <span>Entrega em 30 min</span>
+        </div>
+        <button class="order-btn" disabled>
+            <i class="fas fa-shopping-bag"></i>
+            Finalizar Pedido
+        </button>
+    </div>
+
+    <div class="modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Pedido Confirmado!</h3>
+            <p>Seu pedido de açaí foi recebido e está sendo preparado com carinho. Chegará em aproximadamente 30 minutos.</p>
+            <button class="modal-btn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flavorCards = document.querySelectorAll('.flavor-card');
+            const floatingOrder = document.querySelector('.floating-order');
+            const orderItemsContainer = document.querySelector('.order-items');
+            const orderBtn = document.querySelector('.order-btn');
+            const modal = document.querySelector('.modal');
+            const modalBtn = document.querySelector('.modal-btn');
+
+            let selectedFlavors = [];
+
+            flavorCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const flavor = this.getAttribute('data-flavor');
+                    
+                    if (this.classList.contains('selected')) {
+                        // Deselect the flavor
+                        this.classList.remove('selected');
+                        selectedFlavors = selectedFlavors.filter(item => item !== flavor);
+                    } else {
+                        // Select the flavor if we have less than 2
+                        if (selectedFlavors.length < 2) {
+                            this.classList.add('selected');
+                            selectedFlavors.push(flavor);
+                        }
+                    }
+
+                    updateOrderSummary();
+                    updateCardsState();
+                });
+
+                // Add keyboard accessibility
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            function updateOrderSummary() {
+                orderItemsContainer.innerHTML = '';
+                
+                if (selectedFlavors.length > 0) {
+                    selectedFlavors.forEach(flavor => {
+                        const item = document.createElement('div');
+                        item.className = 'order-item';
+                        item.textContent = flavor;
+                        orderItemsContainer.appendChild(item);
+                    });
+                } else {
+                    const item = document.createElement('div');
+                    item.className = 'order-item';
+                    item.textContent = 'Selecione 2 sabores';
+                    orderItemsContainer.appendChild(item);
+                }
+
+                // Show/hide floating order
+                if (selectedFlavors.length === 2) {
+                    floatingOrder.classList.add('visible');
+                    orderBtn.disabled = false;
+                } else {
+                    floatingOrder.classList.remove('visible');
+                    orderBtn.disabled = true;
+                }
+            }
+
+            function updateCardsState() {
+                if (selectedFlavors.length === 2) {
+                    flavorCards.forEach(card => {
+                        const flavor = card.getAttribute('data-flavor');
+                        if (!selectedFlavors.includes(flavor)) {
+                            card.classList.add('disabled');
+                        }
+                    });
+                } else {
+                    flavorCards.forEach(card => {
+                        card.classList.remove('disabled');
+                    });
+                }
+            }
+
+            orderBtn.addEventListener('click', function() {
+                if (selectedFlavors.length === 2) {
+                    window.location.href = 'pagamento.html';
+                }
+            });
+
+            modalBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+                // Reset selection
+                flavorCards.forEach(card => card.classList.remove('selected', 'disabled'));
+                selectedFlavors = [];
+                updateOrderSummary();
+            });
+        });
+    </script>
+</body>
+</html>
