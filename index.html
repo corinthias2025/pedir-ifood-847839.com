@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Açaí Delivery - Promoção 2 por 1</title>
+    <title>Rei do Açai - Promoção 2 por 1</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
+            /* Cores originais mantidas */
             --primary-color: #e63946;
             --primary-dark: #d62839;
             --secondary-color: #f1faee;
@@ -19,8 +20,11 @@
             --light-gray: #e9ecef;
             --white: #ffffff;
             --black: #000000;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            
+            /* Novas variáveis para melhorias */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 16px;
         }
 
         * {
@@ -34,6 +38,12 @@
             background-color: var(--light-color);
             color: var(--gray-color);
             line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         .container {
@@ -60,98 +70,186 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            text-decoration: none;
         }
 
-        .logo i {
-            color: var(--primary-color);
-            font-size: 2rem;
+        .logo img {
+            height: 60px;
+            width: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
         }
 
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--black);
+            color: var(--primary-dark);
+            line-height: 1.2;
+        }
+
+        .logo .tagline {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            font-weight: 400;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(230, 57, 70, 0.2);
+        }
+
+        .contact-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .contact-btn i {
+            font-size: 1.2rem;
         }
 
         .promo-banner {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
             text-align: center;
-            padding: 10px;
+            padding: 15px;
             font-weight: 500;
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-banner::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
         }
 
         .promo-banner span {
             font-weight: 700;
             background-color: var(--white);
             color: var(--primary-color);
-            padding: 2px 8px;
+            padding: 4px 12px;
             border-radius: 20px;
             margin: 0 5px;
+            display: inline-block;
+            transform: rotate(-2deg);
+        }
+
+        .promo-banner p {
+            position: relative;
+            z-index: 1;
         }
 
         main {
-            padding: 30px 0 100px;
+            padding: 30px 0 120px;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--dark-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
 
         .section-title p {
             color: var(--gray-color);
             max-width: 600px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
         .flavors-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
 
         .flavor-card {
             background-color: var(--white);
-            border-radius: 12px;
+            border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
             cursor: pointer;
             position: relative;
+            border: 2px solid transparent;
         }
 
         .flavor-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
         .flavor-card.selected {
             border: 3px solid var(--primary-color);
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.3);
         }
 
         .flavor-card.disabled {
-            opacity: 0.6;
+            opacity: 0.7;
             pointer-events: none;
         }
 
         .flavor-card-img {
-            height: 250px;
+            height: 280px;
             overflow: hidden;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f5f5f5;
+            background: linear-gradient(45deg, #f3e7e9, #e3eeff);
         }
 
         .flavor-card-img img {
@@ -160,35 +258,51 @@
             max-width: 100%;
             object-fit: contain;
             transition: var(--transition);
+            transform: scale(0.9);
         }
 
         .flavor-card:hover .flavor-card-img img {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+            transform: scale(1);
+            filter: brightness(1.05);
         }
 
         .flavor-card-content {
-            padding: 20px;
+            padding: 25px;
+            position: relative;
         }
 
         .flavor-card-content h3 {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--dark-color);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .flavor-card-content p {
             color: var(--gray-color);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .flavor-price {
+            position: absolute;
+            top: -25px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .checkmark {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 25px;
-            height: 25px;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
             background-color: var(--primary-color);
             border-radius: 50%;
             display: flex;
@@ -197,10 +311,13 @@
             color: var(--white);
             opacity: 0;
             transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid white;
         }
 
         .flavor-card.selected .checkmark {
             opacity: 1;
+            transform: scale(1.1);
         }
 
         .floating-order {
@@ -209,14 +326,16 @@
             left: 0;
             right: 0;
             background-color: var(--white);
-            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
-            padding: 15px 20px;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.15);
+            padding: 20px;
             transform: translateY(100%);
             transition: var(--transition);
             z-index: 90;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
         }
 
         .floating-order.visible {
@@ -226,72 +345,88 @@
         .order-summary {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
         .order-items {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .order-item {
-            background-color: var(--light-gray);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-item i {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .order-item i:hover {
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         .order-price {
             font-weight: 700;
-            color: var(--primary-color);
-            font-size: 1.2rem;
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            white-space: nowrap;
         }
 
         .order-time {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             color: var(--gray-color);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            margin-right: 20px;
+        }
+
+        .order-time i {
+            color: var(--primary-color);
         }
 
         .order-btn {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
             border: none;
-            padding: 12px 25px;
+            padding: 15px 30px;
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
-            animation: pulse 2s infinite;
+            gap: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
         }
 
         .order-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
         }
 
         .order-btn:disabled {
-            background-color: var(--light-gray);
+            background: var(--light-gray);
             color: var(--gray-color);
             cursor: not-allowed;
-            animation: none;
+            box-shadow: none;
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(230, 57, 70, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
-            }
+        .order-btn i {
+            font-size: 1.2rem;
         }
 
         .modal {
@@ -308,6 +443,7 @@
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
@@ -317,13 +453,14 @@
 
         .modal-content {
             background-color: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 400px;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            max-width: 450px;
             width: 90%;
             text-align: center;
             transform: translateY(20px);
             transition: var(--transition);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         .modal.active .modal-content {
@@ -331,46 +468,148 @@
         }
 
         .modal-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            animation: bounce 0.6s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
         }
 
         .modal h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--dark-color);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
 
         .modal p {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         .modal-btn {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
             border: none;
-            padding: 10px 20px;
+            padding: 12px 30px;
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
         }
 
         .modal-btn:hover {
-            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-gray);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
-            .floating-order {
+            .header-content {
                 flex-direction: column;
                 gap: 15px;
-                padding: 15px;
+            }
+
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .floating-order {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
             }
 
             .order-summary {
                 width: 100%;
-                justify-content: space-between;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .order-items {
+                width: 100%;
             }
 
             .order-btn {
@@ -379,18 +618,22 @@
             }
 
             .flavors-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             }
         }
 
         @media (max-width: 480px) {
-            .header-content {
-                flex-direction: column;
-                gap: 10px;
+            .logo h1 {
+                font-size: 1.5rem;
             }
 
-            .logo h1 {
-                font-size: 1.3rem;
+            .logo .tagline {
+                font-size: 0.8rem;
+            }
+
+            .contact-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
             }
 
             .promo-banner {
@@ -398,21 +641,60 @@
             }
 
             .section-title h2 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
+            }
+
+            .section-title p {
+                font-size: 1rem;
             }
 
             .flavor-card-img {
-                height: 200px;
+                height: 220px;
             }
 
-            .order-items {
-                flex-wrap: wrap;
+            .flavor-card-content {
+                padding: 20px;
+            }
+
+            .flavor-card-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .modal h3 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <img src="https://i.imgur.com/44TkOos.png" alt="Rei do Açai Logo">
+                    <div class="logo-text">
+                        <h1>Rei do Açai</h1>
+                        <span class="tagline">O melhor açaí da região</span>
+                    </div>
+                </a>
+                
+                <div class="contact-buttons">
+                    <a href="#" class="contact-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                    <a href="#" class="contact-btn">
+                        <i class="fas fa-phone"></i>
+                        Ligar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <div class="promo-banner">
         <div class="container">
@@ -434,7 +716,8 @@
                     </div>
                     <div class="flavor-card-content">
                         <h3>Açaí Tradicional</h3>
-                        <p>O autêntico sabor da Amazônia, cremoso e delicioso.</p>
+                        <p>O autêntico sabor da Amazônia, cremoso e delicioso, preparado com açaí puro e sem conservantes.</p>
+                        <div class="flavor-price">R$20,00</div>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -447,7 +730,8 @@
                     </div>
                     <div class="flavor-card-content">
                         <h3>Açaí com Banana</h3>
-                        <p>Açaí cremoso combinado com a doçura natural da banana.</p>
+                        <p>Açaí cremoso combinado com a doçura natural da banana, uma combinação clássica e irresistível.</p>
+                        <div class="flavor-price">R$20,00</div>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -460,7 +744,8 @@
                     </div>
                     <div class="flavor-card-content">
                         <h3>Açaí com Morango</h3>
-                        <p>A combinação perfeita de açaí cremoso com morangos frescos.</p>
+                        <p>A combinação perfeita de açaí cremoso com morangos frescos, ideal para quem ama frutas vermelhas.</p>
+                        <div class="flavor-price">R$20,00</div>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -473,7 +758,8 @@
                     </div>
                     <div class="flavor-card-content">
                         <h3>Açaí com Nutella</h3>
-                        <p>Açaí premium com generosas porções de Nutella.</p>
+                        <p>Açaí premium com generosas porções de Nutella, para os amantes de chocolate e açaí.</p>
+                        <div class="flavor-price">R$20,00</div>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -486,7 +772,8 @@
                     </div>
                     <div class="flavor-card-content">
                         <h3>Açaí com Paçoca</h3>
-                        <p>Açaí tradicional com paçoca triturada, uma combinação irresistível.</p>
+                        <p>Açaí tradicional com paçoca triturada, uma combinação crocante e saborosa que vai te surpreender.</p>
+                        <div class="flavor-price">R$20,00</div>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -499,7 +786,8 @@
                     </div>
                     <div class="flavor-card-content">
                         <h3>Açaí com Granola</h3>
-                        <p>Açaí cremoso com crocante granola, perfeito para um lanche saudável.</p>
+                        <p>Açaí cremoso com crocante granola, perfeito para um lanche saudável e energético.</p>
+                        <div class="flavor-price">R$20,00</div>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -526,113 +814,150 @@
         </button>
     </div>
 
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Rei do Açai</div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Home</a>
+                    <a href="#" class="footer-link">Cardápio</a>
+                    <a href="#" class="footer-link">Sobre Nós</a>
+                    <a href="#" class="footer-link">Contato</a>
+                    <a href="#" class="footer-link">Termos de Serviço</a>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <div class="copyright">
+                    &copy; 2023 Rei do Açai. Todos os direitos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <div class="modal">
         <div class="modal-content">
             <div class="modal-icon">
                 <i class="fas fa-check-circle"></i>
             </div>
             <h3>Pedido Confirmado!</h3>
-            <p>Seu pedido de açaí foi recebido e está sendo preparado com carinho. Chegará em aproximadamente 30 minutos.</p>
+            <p>Seu pedido de açaí foi recebido e está sendo preparado com carinho. Nosso entregador estará a caminho em breve e seu açaí chegará em aproximadamente 30 minutos.</p>
             <button class="modal-btn">OK</button>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const flavorCards = document.querySelectorAll('.flavor-card');
-            const floatingOrder = document.querySelector('.floating-order');
-            const orderItemsContainer = document.querySelector('.order-items');
-            const orderBtn = document.querySelector('.order-btn');
-            const modal = document.querySelector('.modal');
-            const modalBtn = document.querySelector('.modal-btn');
+    document.addEventListener('DOMContentLoaded', function() {
+        const flavorCards = document.querySelectorAll('.flavor-card');
+        const floatingOrder = document.querySelector('.floating-order');
+        const orderItemsContainer = document.querySelector('.order-items');
+        const orderBtn = document.querySelector('.order-btn');
+        const modal = document.querySelector('.modal');
+        const modalBtn = document.querySelector('.modal-btn');
 
-            let selectedFlavors = [];
+        let selectedFlavors = [];
 
-            flavorCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const flavor = this.getAttribute('data-flavor');
-                    
-                    if (this.classList.contains('selected')) {
-                        // Deselect the flavor
-                        this.classList.remove('selected');
-                        selectedFlavors = selectedFlavors.filter(item => item !== flavor);
-                    } else {
-                        // Select the flavor if we have less than 2
-                        if (selectedFlavors.length < 2) {
-                            this.classList.add('selected');
-                            selectedFlavors.push(flavor);
-                        }
-                    }
-
-                    updateOrderSummary();
-                    updateCardsState();
-                });
-
-                // Add keyboard accessibility
-                card.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        this.click();
-                    }
-                });
-            });
-
-            function updateOrderSummary() {
-                orderItemsContainer.innerHTML = '';
+        flavorCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const flavor = this.getAttribute('data-flavor');
                 
-                if (selectedFlavors.length > 0) {
-                    selectedFlavors.forEach(flavor => {
-                        const item = document.createElement('div');
-                        item.className = 'order-item';
-                        item.textContent = flavor;
-                        orderItemsContainer.appendChild(item);
-                    });
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    selectedFlavors = selectedFlavors.filter(item => item !== flavor);
                 } else {
-                    const item = document.createElement('div');
-                    item.className = 'order-item';
-                    item.textContent = 'Selecione 2 sabores';
-                    orderItemsContainer.appendChild(item);
+                    if (selectedFlavors.length < 2) {
+                        this.classList.add('selected');
+                        selectedFlavors.push(flavor);
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 200);
+                    }
                 }
-
-                // Show/hide floating order
-                if (selectedFlavors.length === 2) {
-                    floatingOrder.classList.add('visible');
-                    orderBtn.disabled = false;
-                } else {
-                    floatingOrder.classList.remove('visible');
-                    orderBtn.disabled = true;
-                }
-            }
-
-            function updateCardsState() {
-                if (selectedFlavors.length === 2) {
-                    flavorCards.forEach(card => {
-                        const flavor = card.getAttribute('data-flavor');
-                        if (!selectedFlavors.includes(flavor)) {
-                            card.classList.add('disabled');
-                        }
-                    });
-                } else {
-                    flavorCards.forEach(card => {
-                        card.classList.remove('disabled');
-                    });
-                }
-            }
-
-            orderBtn.addEventListener('click', function() {
-                if (selectedFlavors.length === 2) {
-                    window.location.href = 'pagamento.html';
-                }
+                updateOrderSummary();
+                updateCardsState();
             });
 
-            modalBtn.addEventListener('click', function() {
-                modal.classList.remove('active');
-                // Reset selection
-                flavorCards.forEach(card => card.classList.remove('selected', 'disabled'));
-                selectedFlavors = [];
-                updateOrderSummary();
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
             });
         });
-    </script>
-</body>
+
+        function updateOrderSummary() {
+            orderItemsContainer.innerHTML = '';
+            
+            if (selectedFlavors.length > 0) {
+                selectedFlavors.forEach(flavor => {
+                    const item = document.createElement('div');
+                    item.className = 'order-item';
+                    item.innerHTML = `${flavor} <i class="fas fa-times" data-flavor="${flavor}"></i>`;
+                    orderItemsContainer.appendChild(item);
+                });
+
+                document.querySelectorAll('.order-item i').forEach(icon => {
+                    icon.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const flavorToRemove = this.getAttribute('data-flavor');
+                        selectedFlavors = selectedFlavors.filter(item => item !== flavorToRemove);
+                        
+                        flavorCards.forEach(card => {
+                            if (card.getAttribute('data-flavor') === flavorToRemove) {
+                                card.classList.remove('selected');
+                            }
+                        });
+                        
+                        updateOrderSummary();
+                        updateCardsState();
+                    });
+                });
+            } else {
+                const item = document.createElement('div');
+                item.className = 'order-item';
+                item.textContent = 'Selecione 2 sabores';
+                orderItemsContainer.appendChild(item);
+            }
+
+            if (selectedFlavors.length === 2) {
+                floatingOrder.classList.add('visible');
+                orderBtn.disabled = false;
+            } else {
+                floatingOrder.classList.remove('visible');
+                orderBtn.disabled = true;
+            }
+        }
+
+        function updateCardsState() {
+            if (selectedFlavors.length === 2) {
+                flavorCards.forEach(card => {
+                    const flavor = card.getAttribute('data-flavor');
+                    if (!selectedFlavors.includes(flavor)) {
+                        card.classList.add('disabled');
+                    }
+                });
+            } else {
+                flavorCards.forEach(card => {
+                    card.classList.remove('disabled');
+                });
+            }
+        }
+
+        orderBtn.addEventListener('click', function() {
+            if (selectedFlavors.length === 2) {
+                window.location.href = 'pagamento.html';
+            }
+        });
+
+        modalBtn.addEventListener('click', function() {
+            modal.classList.remove('active');
+            flavorCards.forEach(card => card.classList.remove('selected', 'disabled'));
+            selectedFlavors = [];
+            updateOrderSummary();
+        });
+    });
+</script></body>
 </html>
