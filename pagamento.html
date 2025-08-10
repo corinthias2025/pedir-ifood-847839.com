@@ -679,33 +679,48 @@
   </div>
 
   <script>
-    // Carrega o código PIX do arquivo JSON externo
+    // Função para carregar os dados do PIX com tratamento de erros aprimorado
     function loadPixData() {
-      fetch("pix.json")
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById("codigoPix").value = data.codigo_pix;
-          // Atualiza valores do pedido
-          updateOrderValues(data);
+      console.log("Iniciando carregamento do pix.json...");
+      
+      // Adiciona timestamp para evitar cache
+      fetch("pix.json?" + new Date().getTime())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Erro HTTP! status: ${response.status}`);
+          }
+          return response.json();
         })
-        .catch(() => {
-          document.getElementById("codigoPix").value = "Erro ao carregar código PIX.";
-          // Valores padrão caso o JSON não carregue
-          updateOrderValues({
-            valor_itens: 0,
-            taxa_entrega: 0,
-            desconto: 0,
-            valor_total: 0
-          });
+        .then(data => {
+          console.log("Dados recebidos:", data);
+          
+          if (!data.codigo_pix) {
+            throw new Error("Código PIX não encontrado no arquivo JSON");
+          }
+          
+          // Preenche os campos com os dados do JSON
+          document.getElementById("codigoPix").value = data.codigo_pix;
+          
+          // Atualiza apenas os campos que existem no HTML
+          if (data.taxa_entrega !== undefined) {
+            document.getElementById("delivery-fee").textContent = formatCurrency(data.taxa_entrega);
+          }
+          if (data.valor_total !== undefined) {
+            document.getElementById("order-total").textContent = formatCurrency(data.valor_total);
+          }
+          
+          console.log("Dados PIX carregados com sucesso!");
+        })
+        .catch(error => {
+          console.error("Erro ao carregar dados PIX:", error);
+          
+          // Valores fallback caso o JSON não carregue
+          document.getElementById("codigoPix").value = "00020126360014BR.GOV.BCB.PIX0114+551199999999520400005303986540410005802BR5924Loja Exemplo PIX LTDA6009Sao Paulo62070503***6304B14F";
+          document.getElementById("delivery-fee").textContent = "R$ 5,90";
+          document.getElementById("order-total").textContent = "R$ 25,90";
+          
+          showMensagem("Usando dados padrão. Verifique o arquivo pix.json.", true);
         });
-    }
-
-    // Atualiza os valores do pedido
-    function updateOrderValues(data) {
-      document.getElementById("order-items").textContent = formatCurrency(data.valor_itens);
-      document.getElementById("delivery-fee").textContent = formatCurrency(data.taxa_entrega);
-      document.getElementById("order-discount").textContent = `- ${formatCurrency(data.desconto)}`;
-      document.getElementById("order-total").textContent = formatCurrency(data.valor_total);
     }
 
     // Formata valores monetários
@@ -742,16 +757,14 @@
       requiredFields.forEach(field => {
         if (!field.value.trim()) {
           isValid = false;
+          field.classList.add('invalid');
+        } else {
+          field.classList.remove('invalid');
         }
       });
       
-      if (isValid) {
-        continueBtn.classList.remove('btn-disabled');
-        continueBtn.disabled = false;
-      } else {
-        continueBtn.classList.add('btn-disabled');
-        continueBtn.disabled = true;
-      }
+      continueBtn.disabled = !isValid;
+      continueBtn.classList.toggle('btn-disabled', !isValid);
     }
 
     // Event listeners para verificação do formulário
@@ -761,9 +774,7 @@
     // Event listener para o botão Continuar
     continueBtn.addEventListener('click', () => {
       paymentSection.classList.add('show');
-      // Carrega os dados do PIX quando a seção é exibida
       loadPixData();
-      // Rola a página até a seção de pagamento
       paymentSection.scrollIntoView({ behavior: 'smooth' });
     });
 
@@ -791,9 +802,18 @@
     // Copia o código PIX
     copiarBtn.addEventListener("click", () => {
       textarea.select();
-      textarea.setSelectionRange(0, 99999); // para mobile
+      textarea.setSelectionRange(0, 99999);
 
-      if(document.execCommand("copy")) {
+      if(navigator.clipboard) {
+        navigator.clipboard.writeText(textarea.value)
+          .then(() => {
+            showMensagem("Código PIX copiado com sucesso!");
+            openModal();
+          })
+          .catch(() => {
+            showMensagem("Erro ao copiar código.", true);
+          });
+      } else if(document.execCommand("copy")) {
         showMensagem("Código PIX copiado com sucesso!");
         openModal();
       } else {
@@ -856,9 +876,7 @@
           cidadeInput.value = data.localidade || '';
           estadoSelect.value = data.uf || '';
           
-          // Foca no campo número após preencher
           numeroInput.focus();
-          
           showMensagem("Endereço preenchido automaticamente!");
           checkFormValidity();
         })
