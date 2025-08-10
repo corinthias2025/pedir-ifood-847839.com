@@ -321,6 +321,167 @@
       margin-top: 0.5rem;
     }
 
+    /* Formulário de endereço */
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: #e8222e;
+      box-shadow: 0 0 0 3px rgba(232, 34, 46, 0.15);
+    }
+
+    .cep-group {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .cep-group input {
+      flex: 1;
+    }
+
+    .cep-group button {
+      padding: 0 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .address-section {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #eee;
+      animation: fadeIn 0.5s ease;
+    }
+
+    /* Seção de confirmação */
+    .confirmation-section {
+      background: #f0f9f0;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #c8e6c9;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .confirmation-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #2e7d32;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .confirmation-section h2 .material-icons-round {
+      font-size: 1.4rem;
+    }
+
+    .order-summary {
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .order-summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .order-total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-top: 1px solid #c8e6c9;
+      padding-top: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .pix-instructions {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      border: 1px solid #e0e0e0;
+    }
+
+    .pix-instructions ol {
+      padding-left: 1.2rem;
+      text-align: left;
+    }
+
+    .pix-instructions ol li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Seção de pagamento */
+    .payment-section {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .payment-section.show {
+      display: block;
+    }
+
+    .continue-btn {
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .btn-disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: linear-gradient(135deg, #cccccc, #999999) !important;
+    }
+
+    .btn-disabled:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .required-field:invalid {
+      border-color: #ff6b6b;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Responsividade */
     @media (max-width: 480px) {
       body {
@@ -357,6 +518,11 @@
       .modal {
         padding: 2rem 1.8rem;
       }
+
+      .cep-group button {
+        padding: 0 1rem;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -368,18 +534,133 @@
 
   <main class="container" role="main" aria-labelledby="titulo-pagina">
     <h1 id="titulo-pagina">Pagamento via PIX</h1>
-    <p class="descricao">Use o código abaixo para pagar com PIX. Clique para copiar:</p>
+    
+    <section class="address-section">
+      <h2>
+        <span class="material-icons-round">location_on</span>
+        Endereço de Entrega
+      </h2>
+      
+      <form id="addressForm">
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <div class="cep-group">
+            <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="9" inputmode="numeric" class="required-field" required>
+            <button type="button" id="buscarCepBtn">Buscar</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="logradouro">Rua/Avenida</label>
+          <input type="text" id="logradouro" placeholder="Digite o nome da rua" class="required-field" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="numero">Número</label>
+          <input type="text" id="numero" placeholder="Número" inputmode="numeric" class="required-field" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="complemento">Complemento (opcional)</label>
+          <input type="text" id="complemento" placeholder="Apto, bloco, etc.">
+        </div>
+        
+        <div class="form-group">
+          <label for="bairro">Bairro</label>
+          <input type="text" id="bairro" placeholder="Digite o bairro" class="required-field" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="cidade">Cidade</label>
+          <input type="text" id="cidade" placeholder="Digite a cidade" class="required-field" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="estado">Estado</label>
+          <select id="estado" class="required-field" required>
+            <option value="">Selecione</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+          </select>
+        </div>
+        
+        <button type="button" id="continueBtn" class="continue-btn btn-disabled" disabled>
+          Continuar para Pagamento
+          <span class="material-icons-round">arrow_forward</span>
+        </button>
+      </form>
+    </section>
 
-    <div class="card">
-      <textarea id="codigoPix" aria-label="Código PIX para pagamento" readonly></textarea>
-      <button id="copiarBtn" aria-describedby="msgCopiado" aria-live="polite">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zM19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-        </svg>
-        Copiar Código PIX
-      </button>
-      <p id="msgCopiado" class="mensagem" role="alert" aria-live="assertive"></p>
-    </div>
+    <section class="payment-section" id="paymentSection">
+      <div class="confirmation-section">
+        <h2>
+          <span class="material-icons-round">check_circle</span>
+          Confirme seu Pedido
+        </h2>
+        
+        <div class="order-summary">
+          
+          <div class="order-summary-item">
+            <span>Taxa de Entrega:</span>
+            <span id="delivery-fee">R$ 5,90</span>
+          </div>
+         
+          <div class="order-summary-item order-total">
+            <span>Total:</span>
+            <span id="order-total">R$ 25,90</span>
+          </div>
+        </div>
+        
+        <div class="pix-instructions">
+          <p><strong>Para finalizar, faça o pagamento via PIX:</strong></p>
+          <ol>
+            <li>Copie o código PIX abaixo</li>
+            <li>Abra seu aplicativo de banco</li>
+            <li>Selecione pagar com PIX</li>
+            <li>Escolha "PIX Copia e Cola"</li>
+            <li>Cole o código e confirme</li>
+          </ol>
+        </div>
+      </div>
+
+      <p class="descricao">Use o código abaixo para pagar com PIX. Clique para copiar:</p>
+
+      <div class="card">
+        <textarea id="codigoPix" aria-label="Código PIX para pagamento" readonly></textarea>
+        <button id="copiarBtn" aria-describedby="msgCopiado" aria-live="polite">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zM19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+          </svg>
+          Copiar Código PIX
+        </button>
+        <p id="msgCopiado" class="mensagem" role="alert" aria-live="assertive"></p>
+      </div>
+    </section>
   </main>
 
   <!-- Modal popup -->
@@ -399,25 +680,97 @@
 
   <script>
     // Carrega o código PIX do arquivo JSON externo
-    fetch("pix.json")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("codigoPix").value = data.codigo_pix;
-      })
-      .catch(() => {
-        document.getElementById("codigoPix").value = "Erro ao carregar código PIX.";
-      });
+    function loadPixData() {
+      fetch("pix.json")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("codigoPix").value = data.codigo_pix;
+          // Atualiza valores do pedido
+          updateOrderValues(data);
+        })
+        .catch(() => {
+          document.getElementById("codigoPix").value = "Erro ao carregar código PIX.";
+          // Valores padrão caso o JSON não carregue
+          updateOrderValues({
+            valor_itens: 0,
+            taxa_entrega: 0,
+            desconto: 0,
+            valor_total: 0
+          });
+        });
+    }
 
+    // Atualiza os valores do pedido
+    function updateOrderValues(data) {
+      document.getElementById("order-items").textContent = formatCurrency(data.valor_itens);
+      document.getElementById("delivery-fee").textContent = formatCurrency(data.taxa_entrega);
+      document.getElementById("order-discount").textContent = `- ${formatCurrency(data.desconto)}`;
+      document.getElementById("order-total").textContent = formatCurrency(data.valor_total);
+    }
+
+    // Formata valores monetários
+    function formatCurrency(value) {
+      return `R$ ${value.toFixed(2).replace('.', ',')}`;
+    }
+
+    // Elementos da página
     const copiarBtn = document.getElementById("copiarBtn");
     const textarea = document.getElementById("codigoPix");
     const mensagem = document.getElementById("msgCopiado");
     const modalOverlay = document.getElementById("modalOverlay");
     const closeModalBtn = document.getElementById("closeModalBtn");
     const modal = modalOverlay.querySelector('.modal');
+    const continueBtn = document.getElementById("continueBtn");
+    const paymentSection = document.getElementById("paymentSection");
+    const addressForm = document.getElementById("addressForm");
+    
+    // Elementos do formulário de endereço
+    const cepInput = document.getElementById('cep');
+    const buscarCepBtn = document.getElementById('buscarCepBtn');
+    const logradouroInput = document.getElementById('logradouro');
+    const numeroInput = document.getElementById('numero');
+    const complementoInput = document.getElementById('complemento');
+    const bairroInput = document.getElementById('bairro');
+    const cidadeInput = document.getElementById('cidade');
+    const estadoSelect = document.getElementById('estado');
+
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    function checkFormValidity() {
+      const requiredFields = addressForm.querySelectorAll('.required-field');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          isValid = false;
+        }
+      });
+      
+      if (isValid) {
+        continueBtn.classList.remove('btn-disabled');
+        continueBtn.disabled = false;
+      } else {
+        continueBtn.classList.add('btn-disabled');
+        continueBtn.disabled = true;
+      }
+    }
+
+    // Event listeners para verificação do formulário
+    addressForm.addEventListener('input', checkFormValidity);
+    addressForm.addEventListener('change', checkFormValidity);
+
+    // Event listener para o botão Continuar
+    continueBtn.addEventListener('click', () => {
+      paymentSection.classList.add('show');
+      // Carrega os dados do PIX quando a seção é exibida
+      loadPixData();
+      // Rola a página até a seção de pagamento
+      paymentSection.scrollIntoView({ behavior: 'smooth' });
+    });
 
     // Função para mostrar mensagem com fade
-    function showMensagem(text) {
+    function showMensagem(text, isError = false) {
       mensagem.textContent = text;
+      mensagem.style.color = isError ? '#c62828' : '#2e7d32';
       mensagem.classList.add('show');
       setTimeout(() => mensagem.classList.remove('show'), 3000);
     }
@@ -435,6 +788,7 @@
       copiarBtn.focus();
     }
 
+    // Copia o código PIX
     copiarBtn.addEventListener("click", () => {
       textarea.select();
       textarea.setSelectionRange(0, 99999); // para mobile
@@ -443,7 +797,7 @@
         showMensagem("Código PIX copiado com sucesso!");
         openModal();
       } else {
-        showMensagem("Erro ao copiar código.");
+        showMensagem("Erro ao copiar código.", true);
       }
     });
 
@@ -458,6 +812,68 @@
         closeModal();
       }
     });
+    
+    // Formatação do CEP
+    cepInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      
+      if (value.length > 5) {
+        value = value.substring(0, 5) + '-' + value.substring(5, 8);
+      }
+      
+      e.target.value = value;
+      checkFormValidity();
+    });
+    
+    // Busca de CEP via API
+    buscarCepBtn.addEventListener('click', buscarCep);
+    cepInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        buscarCep();
+      }
+    });
+    
+    function buscarCep() {
+      const cep = cepInput.value.replace(/\D/g, '');
+      
+      if (cep.length !== 8) {
+        showMensagem("CEP inválido. Digite 8 números.", true);
+        return;
+      }
+      
+      buscarCepBtn.disabled = true;
+      buscarCepBtn.innerHTML = '<span class="loading"></span> Buscando...';
+      
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.erro) {
+            throw new Error('CEP não encontrado');
+          }
+          
+          logradouroInput.value = data.logradouro || '';
+          bairroInput.value = data.bairro || '';
+          cidadeInput.value = data.localidade || '';
+          estadoSelect.value = data.uf || '';
+          
+          // Foca no campo número após preencher
+          numeroInput.focus();
+          
+          showMensagem("Endereço preenchido automaticamente!");
+          checkFormValidity();
+        })
+        .catch(error => {
+          showMensagem("CEP não encontrado. Preencha manualmente.", true);
+          console.error('Erro ao buscar CEP:', error);
+        })
+        .finally(() => {
+          buscarCepBtn.disabled = false;
+          buscarCepBtn.innerHTML = 'Buscar';
+        });
+    }
+
+    // Inicializa a página
+    checkFormValidity();
   </script>
 </body>
 </html>
