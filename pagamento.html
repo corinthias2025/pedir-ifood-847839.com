@@ -5,12 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Pagamento via PIX - iFood Moderno</title>
 
+  <!-- Pré-conexão para melhor performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
+  <!-- CSS otimizado com animações modernas -->
   <style>
-    /* RESET refinado */
-    * {
+    /* RESET refinado com foco em performance */
+    :root {
+      --primary: #e8222e;
+      --primary-light: #ff4757;
+      --secondary: #2e7d32;
+      --error: #c62828;
+      --text: #3a3a3a;
+      --text-light: #666;
+      --bg-gradient: linear-gradient(135deg, #fff9fa 0%, #ffecee 100%);
+      --shadow-sm: 0 2px 8px rgba(232, 34, 46, 0.1);
+      --shadow-md: 0 6px 20px rgba(232, 34, 46, 0.2);
+      --shadow-lg: 0 12px 40px rgba(232, 34, 46, 0.15);
+      --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --border-radius: 16px;
+    }
+    
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -18,20 +37,21 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #fff9fa 0%, #ffecee 100%);
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       padding: 2.5rem 1rem;
-      color: #3a3a3a;
+      color: var(--text);
       overflow-x: hidden;
       line-height: 1.5;
+      will-change: transform;
     }
 
-    /* Header elegante */
+    /* Header com animação suave */
     header {
       width: 100%;
       max-width: 500px;
@@ -39,39 +59,39 @@
       display: flex;
       justify-content: center;
       animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+      transform-origin: top center;
     }
 
     header img {
       height: 75px;
       width: auto;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: var(--transition);
       filter: drop-shadow(0 2px 6px rgba(232, 34, 46, 0.2));
+      transform-style: preserve-3d;
     }
 
     header img:hover {
-      transform: translateY(-3px);
+      transform: translateY(-3px) scale(1.02);
       filter: drop-shadow(0 4px 12px rgba(232, 34, 46, 0.3));
     }
 
     @keyframes fadeInDown {
       from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-20px) scale(0.98);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
-    /* Container principal */
+    /* Container principal com efeito de vidro */
     .container {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       padding: 3rem;
-      border-radius: 18px;
-      box-shadow: 
-        0 6px 30px rgba(232, 34, 46, 0.12),
-        0 12px 40px rgba(232, 34, 46, 0.08);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
       max-width: 500px;
       width: 100%;
       text-align: center;
@@ -79,6 +99,8 @@
       animation: fadeInUp 0.6s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(8px);
+      transform-style: preserve-3d;
     }
 
     .container::before {
@@ -88,29 +110,36 @@
       left: 0;
       right: 0;
       height: 5px;
-      background: linear-gradient(90deg, #e8222e, #ff4757);
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      animation: progressBar 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes progressBar {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(20px) scale(0.98);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
     /* Tipografia refinada */
     h1 {
-      font-size: 2.2rem;
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
       font-weight: 800;
-      color: #e8222e;
+      color: var(--primary);
       margin-bottom: 1.5rem;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       position: relative;
       display: inline-block;
+      text-shadow: 0 2px 4px rgba(232, 34, 46, 0.1);
     }
 
     h1::after {
@@ -121,14 +150,20 @@
       transform: translateX(-50%);
       width: 50px;
       height: 3px;
-      background: #e8222e;
+      background: var(--primary);
       border-radius: 3px;
+      animation: scaleIn 0.8s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+
+    @keyframes scaleIn {
+      from { transform: translateX(-50%) scaleX(0); }
+      to { transform: translateX(-50%) scaleX(1); }
     }
 
     .descricao {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 3vw, 1.1rem);
       margin-bottom: 2.5rem;
-      color: #666;
+      color: var(--text-light);
       font-weight: 500;
     }
 
@@ -139,7 +174,7 @@
       gap: 2rem;
     }
 
-    /* Textarea premium */
+    /* Textarea com efeito de foco moderno */
     textarea {
       width: 100%;
       height: 140px;
@@ -149,43 +184,47 @@
       border-radius: 12px;
       border: 1px solid #e0e0e0;
       font-weight: 600;
-      color: #c62828;
+      color: var(--error);
       background: #fff;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: var(--transition);
       box-shadow: 
         inset 0 1px 4px rgba(0,0,0,0.05),
         0 2px 8px rgba(232, 34, 46, 0.1);
       font-family: 'Roboto Mono', monospace;
+      transform-style: preserve-3d;
     }
 
     textarea:focus {
       outline: none;
-      border-color: #e8222e;
+      border-color: var(--primary);
       box-shadow: 
         inset 0 1px 4px rgba(0,0,0,0.05),
         0 0 0 3px rgba(232, 34, 46, 0.15);
+      transform: translateZ(10px);
     }
 
-    /* Botão premium */
+    /* Botão com efeito 3D e gradiente animado */
     button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.8rem;
       padding: 1.1rem 2rem;
-      background: linear-gradient(135deg, #e8222e, #ff4757);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
       font-weight: 700;
       font-size: 1.1rem;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: var(--transition);
       box-shadow: 
         0 4px 15px rgba(232, 34, 46, 0.3),
         0 2px 4px rgba(0,0,0,0.05);
       position: relative;
       overflow: hidden;
+      transform-style: preserve-3d;
+      z-index: 1;
     }
 
     button::before {
@@ -195,15 +234,16 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.6s;
+      z-index: -1;
     }
 
     button:hover {
-      transform: translateY(-2px);
+      transform: translateY(-2px) translateZ(10px);
       box-shadow: 
-        0 6px 20px rgba(232, 34, 46, 0.4),
-        0 3px 6px rgba(0,0,0,0.08);
+        0 8px 25px rgba(232, 34, 46, 0.4),
+        0 4px 8px rgba(0,0,0,0.1);
     }
 
     button:hover::before {
@@ -211,7 +251,7 @@
     }
 
     button:active {
-      transform: translateY(0);
+      transform: translateY(0) translateZ(5px);
     }
 
     button svg {
@@ -222,29 +262,61 @@
     }
 
     button:hover svg {
-      transform: scale(1.15);
+      transform: scale(1.15) translateZ(5px);
     }
 
-    /* Mensagem de feedback */
+    /* Efeito de onda ao clicar */
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%, -50%);
+      transform-origin: 50% 50%;
+    }
+
+    button:focus:not(:active)::after {
+      animation: ripple 0.6s ease-out;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+
+    /* Mensagem de feedback com animação suave */
     .mensagem {
-      color: #2e7d32;
+      color: var(--secondary);
       font-size: 1rem;
       font-weight: 600;
       margin-top: 1rem;
       min-height: 1.4em;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      transform: translateY(10px);
     }
 
     .mensagem.show {
       opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Modal premium */
+    /* Modal com efeito de vidro */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -268,9 +340,9 @@
     }
 
     .modal {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
       padding: 2.5rem;
-      border-radius: 16px;
+      border-radius: var(--border-radius);
       max-width: 420px;
       width: 90%;
       box-shadow: 
@@ -278,17 +350,19 @@
         0 4px 10px rgba(0,0,0,0.08);
       animation: modalIn 0.4s cubic-bezier(0.2, 0, 0.2, 1) forwards;
       position: relative;
-      border-top: 4px solid #e8222e;
+      border-top: 4px solid var(--primary);
+      backdrop-filter: blur(12px);
+      transform-style: preserve-3d;
     }
 
     @keyframes modalIn {
       from {
         opacity: 0;
-        transform: translateY(20px) scale(0.98);
+        transform: translateY(20px) scale(0.98) translateZ(-20px);
       }
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) scale(1) translateZ(0);
       }
     }
 
@@ -303,6 +377,27 @@
       font-weight: 500;
       position: relative;
       padding-left: 1.5rem;
+      list-style-type: none;
+      animation: fadeInRight 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .modal ol li:nth-child(1) { animation-delay: 0.1s; }
+    .modal ol li:nth-child(2) { animation-delay: 0.2s; }
+    .modal ol li:nth-child(3) { animation-delay: 0.3s; }
+    .modal ol li:nth-child(4) { animation-delay: 0.4s; }
+    .modal ol li:nth-child(5) { animation-delay: 0.5s; }
+    .modal ol li:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .modal ol li::before {
@@ -312,8 +407,15 @@
       top: 0.6rem;
       width: 8px;
       height: 8px;
-      background: #e8222e;
+      background: var(--primary);
       border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
 
     .modal button {
@@ -321,10 +423,31 @@
       margin-top: 0.5rem;
     }
 
-    /* Formulário de endereço */
+    /* Formulário de endereço com animações */
     .form-group {
       margin-bottom: 1.5rem;
       text-align: left;
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
+    .form-group:nth-child(7) { animation-delay: 0.7s; }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .form-group label {
@@ -340,14 +463,16 @@
       font-size: 1rem;
       border-radius: 8px;
       border: 1px solid #ddd;
-      transition: all 0.3s ease;
+      transition: var(--transition);
       font-family: 'Poppins', sans-serif;
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .form-group input:focus, .form-group select:focus {
       outline: none;
-      border-color: #e8222e;
+      border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(232, 34, 46, 0.15);
+      transform: translateZ(5px);
     }
 
     .cep-group {
@@ -364,29 +489,27 @@
       font-size: 0.9rem;
     }
 
-    .address-section {
-      background: #f9f9f9;
+    /* Seções com efeito de aparecimento */
+    .address-section, .confirmation-section {
+      background: rgba(249, 249, 249, 0.8);
       padding: 1.5rem;
       border-radius: 12px;
       margin-bottom: 1.5rem;
-      border: 1px solid #eee;
+      border: 1px solid rgba(238, 238, 238, 0.8);
       animation: fadeIn 0.5s ease;
+      backdrop-filter: blur(4px);
+      transform-style: preserve-3d;
     }
 
-    /* Seção de confirmação */
     .confirmation-section {
-      background: #f0f9f0;
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      border: 1px solid #c8e6c9;
-      animation: fadeIn 0.5s ease;
+      background: rgba(240, 249, 240, 0.8);
+      border: 1px solid rgba(200, 230, 201, 0.8);
     }
 
     .confirmation-section h2 {
       font-size: 1.3rem;
       margin-bottom: 1rem;
-      color: #2e7d32;
+      color: var(--secondary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -395,6 +518,12 @@
 
     .confirmation-section h2 .material-icons-round {
       font-size: 1.4rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
     .order-summary {
@@ -406,22 +535,28 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .order-summary-item:hover {
+      transform: translateX(5px);
     }
 
     .order-total {
       font-weight: 700;
       font-size: 1.2rem;
-      border-top: 1px solid #c8e6c9;
+      border-top: 1px solid rgba(200, 230, 201, 0.8);
       padding-top: 0.8rem;
       margin-top: 0.8rem;
     }
 
     .pix-instructions {
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
       padding: 1rem;
       border-radius: 8px;
       margin-top: 1rem;
-      border: 1px solid #e0e0e0;
+      border: 1px solid rgba(224, 224, 224, 0.8);
+      transform: translateZ(10px);
     }
 
     .pix-instructions ol {
@@ -431,6 +566,15 @@
 
     .pix-instructions ol li {
       margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .pix-instructions ol li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
     }
 
     /* Seção de pagamento */
@@ -452,6 +596,8 @@
       opacity: 0.7;
       cursor: not-allowed;
       background: linear-gradient(135deg, #cccccc, #999999) !important;
+      transform: none !important;
+      box-shadow: none !important;
     }
 
     .btn-disabled:hover {
@@ -477,12 +623,29 @@
       to { transform: rotate(360deg); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Efeito de confete para sucesso */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary);
+      opacity: 0;
+      z-index: 9999;
+      animation: confetti 3s ease-in-out forwards;
     }
 
-    /* Responsividade */
+    @keyframes confetti {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Responsividade aprimorada */
     @media (max-width: 480px) {
       body {
         padding: 1.8rem 1rem;
@@ -524,12 +687,22 @@
         font-size: 0.8rem;
       }
     }
+
+    /* Efeito de flutuação sutil para elementos */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="Logo iFood" />
+    <img src="https://logodownload.org/wp-content/uploads/2017/05/ifood-logo-0.png" alt="Logo iFood" class="floating" />
   </header>
 
   <main class="container" role="main" aria-labelledby="titulo-pagina">
@@ -666,6 +839,7 @@
   <!-- Modal popup -->
   <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
     <div class="modal" tabindex="0">
+      <h2 id="modalTitle" style="margin-bottom: 1.5rem; color: var(--primary);">Como pagar com PIX</h2>
       <ol id="modalDesc">
         <li>Abra o aplicativo do seu banco ou carteira digital.</li>
         <li>Acesse a opção de pagamento via PIX.</li>
@@ -674,7 +848,7 @@
         <li>Confira os dados e confirme o pagamento.</li>
         <li>Guarde o comprovante para eventuais confirmações.</li>
       </ol>
-      <button id="closeModalBtn" aria-label="Fechar instruções">OK</button>
+      <button id="closeModalBtn" aria-label="Fechar instruções">OK, entendi</button>
     </div>
   </div>
 
@@ -682,6 +856,12 @@
     // Função para carregar os dados do PIX com tratamento de erros aprimorado
     function loadPixData() {
       console.log("Iniciando carregamento do pix.json...");
+      
+      // Mostrar estado de carregamento
+      const continueBtn = document.getElementById("continueBtn");
+      const originalText = continueBtn.innerHTML;
+      continueBtn.innerHTML = '<span class="loading"></span> Carregando...';
+      continueBtn.disabled = true;
       
       // Adiciona timestamp para evitar cache
       fetch("pix.json?" + new Date().getTime())
@@ -710,6 +890,9 @@
           }
           
           console.log("Dados PIX carregados com sucesso!");
+          
+          // Criar efeito de confete
+          createConfetti();
         })
         .catch(error => {
           console.error("Erro ao carregar dados PIX:", error);
@@ -720,7 +903,32 @@
           document.getElementById("order-total").textContent = "R$ 25,90";
           
           showMensagem("Usando dados padrão. Verifique o arquivo pix.json.", true);
+        })
+        .finally(() => {
+          continueBtn.innerHTML = originalText;
+          continueBtn.disabled = false;
         });
+    }
+
+    // Criar efeito de confete
+    function createConfetti() {
+      const colors = ['#e8222e', '#ff4757', '#2e7d32', '#4CAF50', '#FFC107', '#FF5722'];
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = confetti.style.width;
+        document.body.appendChild(confetti);
+        
+        // Remover após animação
+        setTimeout(() => {
+          confetti.remove();
+        }, 3000);
+      }
     }
 
     // Formata valores monetários
@@ -775,15 +983,27 @@
     continueBtn.addEventListener('click', () => {
       paymentSection.classList.add('show');
       loadPixData();
-      paymentSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Animação suave de scroll
+      paymentSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
     });
 
     // Função para mostrar mensagem com fade
     function showMensagem(text, isError = false) {
       mensagem.textContent = text;
-      mensagem.style.color = isError ? '#c62828' : '#2e7d32';
+      mensagem.style.color = isError ? 'var(--error)' : 'var(--secondary)';
       mensagem.classList.add('show');
-      setTimeout(() => mensagem.classList.remove('show'), 3000);
+      
+      // Reset da animação
+      setTimeout(() => {
+        mensagem.classList.remove('show');
+        setTimeout(() => {
+          mensagem.style.color = '';
+        }, 400);
+      }, 3000);
     }
 
     // Função para abrir modal e focar dentro
@@ -803,6 +1023,12 @@
     copiarBtn.addEventListener("click", () => {
       textarea.select();
       textarea.setSelectionRange(0, 99999);
+
+      // Efeito visual ao copiar
+      copiarBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> Código Copiado!';
+      setTimeout(() => {
+        copiarBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zM19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Copiar Código PIX';
+      }, 2000);
 
       if(navigator.clipboard) {
         navigator.clipboard.writeText(textarea.value)
@@ -892,6 +1118,23 @@
 
     // Inicializa a página
     checkFormValidity();
+    
+    // Adiciona efeito de hover 3D ao container principal
+    const container = document.querySelector('.container');
+    container.addEventListener('mousemove', (e) => {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+    
+    container.addEventListener('mouseenter', () => {
+      container.style.transition = 'transform 0.1s ease';
+    });
+    
+    container.addEventListener('mouseleave', () => {
+      container.style.transition = 'transform 0.5s ease';
+      container.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
   </script>
 </body>
 </html>
