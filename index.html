@@ -52,83 +52,6 @@
             padding: 0 20px;
         }
 
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 60px;
-            width: auto;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary-color);
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            line-height: 1.2;
-        }
-
-        .logo .tagline {
-            font-size: 0.9rem;
-            color: var(--gray-color);
-            font-weight: 400;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .contact-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            box-shadow: 0 4px 8px rgba(230, 57, 70, 0.2);
-        }
-
-        .contact-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(230, 57, 70, 0.3);
-        }
-
-        .contact-btn i {
-            font-size: 1.2rem;
-        }
-
         .promo-banner {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: var(--white);
@@ -318,6 +241,35 @@
         .flavor-card.selected .checkmark {
             opacity: 1;
             transform: scale(1.1);
+        }
+
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(230, 57, 70, 0.2);
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #c1121f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .add-to-cart-btn i {
+            font-size: 1rem;
         }
 
         .floating-order {
@@ -580,21 +532,6 @@
         }
 
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .logo {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .contact-buttons {
-                width: 100%;
-                justify-content: center;
-            }
-
             .floating-order {
                 flex-direction: column;
                 gap: 20px;
@@ -623,23 +560,6 @@
         }
 
         @media (max-width: 480px) {
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-
-            .logo .tagline {
-                font-size: 0.8rem;
-            }
-
-            .contact-btn {
-                padding: 8px 12px;
-                font-size: 0.9rem;
-            }
-
-            .promo-banner {
-                font-size: 0.9rem;
-            }
-
             .section-title h2 {
                 font-size: 1.8rem;
             }
@@ -660,6 +580,11 @@
                 font-size: 1.2rem;
             }
 
+            .add-to-cart-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
             .modal-content {
                 padding: 30px 20px;
             }
@@ -671,31 +596,6 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <img src="https://i.imgur.com/44TkOos.png" alt="Rei do Açai Logo">
-                    <div class="logo-text">
-                        <h1>Rei do Açai</h1>
-                        <span class="tagline">O melhor açaí da região</span>
-                    </div>
-                </a>
-                
-                <div class="contact-buttons">
-                    <a href="#" class="contact-btn">
-                        <i class="fab fa-whatsapp"></i>
-                        WhatsApp
-                    </a>
-                    <a href="#" class="contact-btn">
-                        <i class="fas fa-phone"></i>
-                        Ligar
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <div class="promo-banner">
         <div class="container">
             <p>PROMOÇÃO IMPERDÍVEL! <br><span>2 SABORES POR APENAS R$20,00</span><br> Aproveite essa oferta especial!</p>
@@ -718,6 +618,10 @@
                         <h3>Açaí Tradicional</h3>
                         <p>O autêntico sabor da Amazônia, cremoso e delicioso, preparado com açaí puro e sem conservantes.</p>
                         <div class="flavor-price">R$20,00</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i>
+                            Adicionar ao Carrinho
+                        </button>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -732,6 +636,10 @@
                         <h3>Açaí com Banana</h3>
                         <p>Açaí cremoso combinado com a doçura natural da banana, uma combinação clássica e irresistível.</p>
                         <div class="flavor-price">R$20,00</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i>
+                            Adicionar ao Carrinho
+                        </button>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -746,6 +654,10 @@
                         <h3>Açaí com Morango</h3>
                         <p>A combinação perfeita de açaí cremoso com morangos frescos, ideal para quem ama frutas vermelhas.</p>
                         <div class="flavor-price">R$20,00</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i>
+                            Adicionar ao Carrinho
+                        </button>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -760,6 +672,10 @@
                         <h3>Açaí com Nutella</h3>
                         <p>Açaí premium com generosas porções de Nutella, para os amantes de chocolate e açaí.</p>
                         <div class="flavor-price">R$20,00</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i>
+                            Adicionar ao Carrinho
+                        </button>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -774,6 +690,10 @@
                         <h3>Açaí com Paçoca</h3>
                         <p>Açaí tradicional com paçoca triturada, uma combinação crocante e saborosa que vai te surpreender.</p>
                         <div class="flavor-price">R$20,00</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i>
+                            Adicionar ao Carrinho
+                        </button>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -788,6 +708,10 @@
                         <h3>Açaí com Granola</h3>
                         <p>Açaí cremoso com crocante granola, perfeito para um lanche saudável e energético.</p>
                         <div class="flavor-price">R$20,00</div>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-cart-plus"></i>
+                            Adicionar ao Carrinho
+                        </button>
                     </div>
                     <div class="checkmark">
                         <i class="fas fa-check"></i>
@@ -851,6 +775,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const flavorCards = document.querySelectorAll('.flavor-card');
+        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
         const floatingOrder = document.querySelector('.floating-order');
         const orderItemsContainer = document.querySelector('.order-items');
         const orderBtn = document.querySelector('.order-btn');
@@ -859,31 +784,51 @@
 
         let selectedFlavors = [];
 
-        flavorCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const flavor = this.getAttribute('data-flavor');
-                
-                if (this.classList.contains('selected')) {
-                    this.classList.remove('selected');
-                    selectedFlavors = selectedFlavors.filter(item => item !== flavor);
+        // Função para adicionar pelo botão
+        function addToCart(flavorCard) {
+            const flavor = flavorCard.getAttribute('data-flavor');
+            
+            if (flavorCard.classList.contains('selected')) {
+                flavorCard.classList.remove('selected');
+                selectedFlavors = selectedFlavors.filter(item => item !== flavor);
+            } else {
+                if (selectedFlavors.length < 2) {
+                    flavorCard.classList.add('selected');
+                    selectedFlavors.push(flavor);
+                    flavorCard.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        flavorCard.style.transform = '';
+                    }, 200);
                 } else {
-                    if (selectedFlavors.length < 2) {
-                        this.classList.add('selected');
-                        selectedFlavors.push(flavor);
-                        this.style.transform = 'scale(0.95)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 200);
-                    }
+                    alert('Você já selecionou 2 sabores. Remova um para adicionar outro.');
                 }
-                updateOrderSummary();
-                updateCardsState();
+            }
+            updateOrderSummary();
+            updateCardsState();
+        }
+
+        // Adiciona evento de clique nos botões
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const flavorCard = this.closest('.flavor-card');
+                addToCart(flavorCard);
+            });
+        });
+
+        // Mantém o evento de clique nos cards
+        flavorCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Verifica se o clique não foi no botão
+                if (!e.target.closest('.add-to-cart-btn')) {
+                    addToCart(this);
+                }
             });
 
             card.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    this.click();
+                    addToCart(this);
                 }
             });
         });
